@@ -5,24 +5,34 @@ import './index.css'
 
 
 const adminUser={
-  name : "admin@admin.ma",
+  name : "admin",
   pass : "admin"
 }
 class App extends Component {
   constructor(){
     super()
-    this.user = {
+    this.state = {
       name : "",
       pass : ""
     }
+    this.Login = this.Login.bind(this);
 
   }
 
 
   Login = state=>{
-    console.log(state)
+  //  console.log(state)
+    if(state.name===adminUser.name &&  state.pass===adminUser.pass){
+      this.setState({name:state.name,pass:state.pass})
 
+    }
   }
+  Logout=state=>{
+    //  console.log(state)
+        this.setState({name:"",pass:""})
+  
+      
+    }
 
 
   render(){
@@ -38,7 +48,14 @@ class App extends Component {
 
       <Background/>
       <div className="login-container">
-      <Login Login={this.Login}/>
+        {
+          (this.state.name!=="")? (<div>
+            
+                                         <h1>Hello {this.state.name}</h1> 
+                                          <button className="btn" onClick={this.Logout}>logout</button>
+                                     </div>
+                                      ): (<Login Login={this.Login}/>)
+        }
       </div>
       </div>
 
