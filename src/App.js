@@ -49,7 +49,7 @@ class App extends Component {
     </div>
     <div class="container">
 
-      <Background/>
+      <Background name={this.state.name}/>
       <div className="login-container">
         {
           (this.state.name!=="")? (<div>
