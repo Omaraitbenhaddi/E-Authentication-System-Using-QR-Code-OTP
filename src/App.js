@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component  } from "react";
 import Background from "./components/Background";
 import Login from "./components/Login";
 import './index.css'
@@ -13,9 +13,9 @@ class App extends Component {
     super()
     this.state = {
       name : "",
-      pass : ""
+      pass : "",
+      error : ""
     }
-    this.Login = this.Login.bind(this);
 
   }
 
@@ -25,6 +25,9 @@ class App extends Component {
     if(state.name===adminUser.name &&  state.pass===adminUser.pass){
       this.setState({name:state.name,pass:state.pass})
 
+    }
+    else{
+      this.setState({error:"detaill no match"})
     }
   }
   Logout=state=>{
@@ -54,7 +57,7 @@ class App extends Component {
                                          <h1>Hello {this.state.name}</h1> 
                                           <button className="btn" onClick={this.Logout}>logout</button>
                                      </div>
-                                      ): (<Login Login={this.Login}/>)
+                                      ): (<Login Login={this.Login} error={this.state.error}/>)
         }
       </div>
       </div>

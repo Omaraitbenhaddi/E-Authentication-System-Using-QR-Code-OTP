@@ -22,7 +22,8 @@ class Login extends Component {
     return (
           
           <form  onSubmit={this.submit}>
-                    <h2 className="title">Login</h2>
+                    <h2 className="title">Login </h2>
+                    <p><span>{this.props.error}</span></p>
     
                     <div className="input-div one focus">
                         <div className="i">
