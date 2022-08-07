@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Background from "./components/Background";
+import Login from "./components/Login";
+import './index.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+const adminUser={
+  name : "admin@admin.ma",
+  pass : "admin"
+}
+class App extends Component {
+  constructor(){
+    super()
+    this.user = {
+      name : "",
+      pass : ""
+    }
+
+  }
+
+
+  Login = state=>{
+    console.log(state)
+
+  }
+
+
+  render(){
+    return (
+
+      <div className="App">
+
+
+    <div class="wrapper">
+  <div class="wave"></div>
+    </div>
+    <div class="container">
+
+      <Background/>
+      <div className="login-container">
+      <Login Login={this.Login}/>
+      </div>
+      </div>
+
+
+
+
     </div>
   );
+  }
 }
 
 export default App;
