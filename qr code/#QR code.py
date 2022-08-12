@@ -1,4 +1,4 @@
-#QR code 
+##QR code 
 
 from datetime import datetime
 
@@ -51,4 +51,4 @@ def generateOTP() :
 # Driver code
 if __name__ == "__main__" :
      
-    print("OTP of 4 digits:", generateOTP())
+    print("OTP of 4 digits:", generateOTP())  
