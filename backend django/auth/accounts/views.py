@@ -1,11 +1,9 @@
 import email
 from urllib import request
-from django.shortcuts import render
 from rest_framework.views import APIView
 from django.contrib.auth import login
 from rest_framework.response import Response
 from .models import User , EmailOTP
-from django.shortcuts import get_object_or_404
 from .serializer import LoginUserSerializer
 from django.contrib.auth.signals import  user_logged_out
 import random
@@ -15,7 +13,10 @@ from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 
 
-class ValidateEmailSendOTP(APIView):
+class ValidateEmailSendOTP(APIView):    
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
 
 
 
@@ -80,6 +81,9 @@ class ValidateEmailSendOTP(APIView):
 
 
 class Validateotp(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
     
     def post(self,request,*args,**kwargs):
         email = request.data.get('email',False)
