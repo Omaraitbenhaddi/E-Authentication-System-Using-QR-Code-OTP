@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'rest_framework',
     'knox',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -136,19 +137,13 @@ REST_KNOX = {
   'USER_SERIALIZER': 'knox.serializers.UserSerializer',
 }
 
-
-
-
-
-
-
-
 REST_FRAMEWORK = {
-   'DEFAULT_AUTHENTICATION_CLASSES': (
-       'rest_framework.authentication.TokenAuthentication',
-       
-   ),
-   'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser'
-   ),
+   'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication', ),
+   'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser', ),
 }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'email@gmail.com'
+EMAIL_HOST_PASSWORD = ''
