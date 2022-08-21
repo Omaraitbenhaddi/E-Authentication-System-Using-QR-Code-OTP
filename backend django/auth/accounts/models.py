@@ -91,9 +91,6 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
-
-
-
 class EmailOTP(models.Model):
     email = models.EmailField(max_length=60,unique=True)
     otp         = models.CharField(max_length = 9, blank = True, null= True)
