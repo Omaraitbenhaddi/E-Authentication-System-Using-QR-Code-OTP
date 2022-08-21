@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from rest_framework.response import Response
 from .models import User , EmailOTP
 from django.shortcuts import get_object_or_404
-from .serializer import LoginUserSerializer, UserSerializer
+from .serializer import LoginUserSerializer
 from django.contrib.auth.signals import  user_logged_out
 
 import random,math
@@ -18,11 +18,13 @@ from knox.views import LoginView as KnoxLoginView
 
 
 class ValidateEmailSendOTP(APIView):
+    authentication_classes =(TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self,request,*args,**kwargs):
         data=request.data
-        serializer = LoginUserSerializer(data = data)
-        if serializer.is_valid:
-            serializer.save()
+        email = data.get('email')
+        if email:
             user = User.objects.filter(email__iexact = email)
             key=send_otp_email(email)
             if key:
@@ -40,8 +42,7 @@ class ValidateEmailSendOTP(APIView):
                     old.save()
                     return Response({
                         'status': 200,
-                        'detail':'sent otp seccuful',
-                        'data': serializer.data
+                        'detail':'sent otp seccuful'
                     })
                 else :
                     EmailOTP.objects.create(
@@ -50,8 +51,7 @@ class ValidateEmailSendOTP(APIView):
                     )
                     return Response({
                             'status': 200,
-                            'detail':'sent otp seccuful',
-                            'data': serializer.data
+                            'detail':'sent otp seccuful'
                         })
             else :
                     return Response({
@@ -61,20 +61,20 @@ class ValidateEmailSendOTP(APIView):
         else:
             return Response({
                 'status':400,
-                'detail':'something went wrong',
-                'data': serializer.erros
+                'detail':'something went wrong'
 
             })
 
 
 
 class Validateotp(APIView):
+    authentication_classes =(TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self,request,*args,**kwargs):
-        data = data.request
-        serializer = EmailOTPSerializer(data = data)
-        if serializer.is_valid:
-            email=serializer.data['email']
-            otp_sent = serializer.data['otp']
+        data = request.data
+        email = data.get('email')
+        otp_sent = data.get('otp')
+        if email and otp_sent:
             old=EmailOTP.objects.filter(email__iexact=email)
             if old.exists():
                 old= old.first()
@@ -98,8 +98,7 @@ class Validateotp(APIView):
                 })
         return Response({
             'status' : 200,
-            'detaild' : 'something went wrong',
-            'data':serializer.errors
+            'detaild' : 'something went wrong'
         })
 
 
