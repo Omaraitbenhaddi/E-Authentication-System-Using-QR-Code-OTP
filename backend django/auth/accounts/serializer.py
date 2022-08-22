@@ -4,13 +4,9 @@ from pyexpat import model
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
-
+from .models import User, EmailOTP
 
 User =get_user_model()
-
-
-
-
 class LoginUserSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField(
