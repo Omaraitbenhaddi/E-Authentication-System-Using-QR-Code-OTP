@@ -12,7 +12,7 @@ def send_otp_email(email):
         for i in range(10):
             generate_otp+= cus[math.floor(random.random() * length)]
         message =f'your otp is {generate_otp}'
-        email_from = settings.EMAIL_HOST_USERon 
+        email_from = settings.EMAIL_HOST_USER
         send_mail(subject, message, email_from , [email,])
         return generate_otp
     else:

@@ -29,45 +29,46 @@ class ValidateEmailSendOTP(APIView):
         email = data.get('email')
         if email:
             
-            old=EmailOTP.objects.filter(email__iexact = email)
             key=send_otp_email(email)
-            if old.count > 10:
-                                    return Response({
-                            'status':400,
-                            'detail':'sending otp error. limit exceded please contact customer suport'
-                        })
-            else :
-                if key:
-                    if old.exists():
-                        old=old.first()
-                        count=old.count
-                        old.count=count+1
-                        old.otp=key
-                        old.save()
-                        return Response({
-                            'status': 200,
-                            'detail':'sent otp seccuful'
-                        })
+            print(key)
+            if key:
+                old=EmailOTP.objects.filter(email__iexact = email)
+                if old.exists():
+                    old=old.first()
+                    if (old.count > 10):
+                                            return Response({
+                                    'status':400,
+                                    'detail':'sending otp error. limit exceded please contact customer suport'
+                                })
                     else :
-                        EmailOTP.objects.create(
-                            email=email,
-                            otp=key,
-                        )
-                        return Response({
-                                'status': 200,
-                                'detail':'sent otp seccuful'
-                            })
-                else :
-                        return Response({
-                            'status':400,
-                            'detail':'sending otp eror'
-                        })
-        else:
-                return Response({
-                    'status':400,
-                    'detail':'something went wrong'
+                                old.count=old.count+1
+                                old.otp=key
 
-                })
+                                old.save()
+                                return Response({
+                                    'status': 200,
+                                    'detail':'sent otp seccuful'
+                                })
+                else :
+                            EmailOTP.objects.create(
+                                email=email,
+                                otp=key,
+                            )
+                            return Response({
+                                    'status': 200,
+                                    'detail':'sent otp seccuful'
+                                })
+            else :
+                            return Response({
+                                'status':400,
+                                'detail':'sending otp eror'
+                            })
+        else:
+                    return Response({
+                        'status':400,
+                        'detail':'something went wrong'
+
+                    })
 
 
 
@@ -125,9 +126,12 @@ class LogoutView(APIView):
 
     def post(self, request, format=None):
         user = EmailOTP.objects.filter(email__iexact = request.user.email)
-        user.validated=False       
-        user.count=0
-        user.otp=NULL
+        if user.exists():
+            user=user.first()
+            user.validated=False       
+            user.count=0
+            user.otp=NULL
+            user.save()
         request._auth.delete()
         user_logged_out.send(sender=request.user.__class__,
                              request=request, user=request.user)
