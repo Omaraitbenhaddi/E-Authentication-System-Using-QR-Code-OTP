@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-=4-^ua+q=*f%e7wh!am&%h(!!b52(jfzhc8v0s+c(=ze-bc2xl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'knox',
     'rest_framework',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -51,8 +53,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
-
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 ROOT_URLCONF = 'auth.urls'
 
 TEMPLATES = [
@@ -147,3 +153,4 @@ EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'abcbahtar@gmail.com'
 EMAIL_HOST_PASSWORD = 'fzbqzgnhdxnkkrie'
+
