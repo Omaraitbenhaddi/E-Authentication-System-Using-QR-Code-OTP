@@ -1,4 +1,4 @@
-##QR code 
+#QR code 
 
 from datetime import datetime
 
@@ -7,9 +7,13 @@ now = datetime.now()
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-
+#make an input interface for the user 
+import pyautogui
+username=pyautogui.prompt(text='', title='username' , default='')
+password=pyautogui.password(text='', title='password', default='', mask='*')
 #name of user
-user="admin"
+user=username
+passw=password
 #to  generate QRCODE
 import qrcode
 info=user+" "+dt_string
@@ -29,26 +33,3 @@ val,points,straight_qrcode=d.detectAndDecode(cv2.imread("admin.png"))
 
 print(val)
 
-#OTP_generator
-# import library
-import math, random
- 
-# function to generate OTP
-def generateOTP() :
- 
-    # Declare a digits variable 
-    # which stores all digits
-    digits = "0123456789"
-    OTP = ""
- 
-   # length of password can be changed
-   # by changing value in range
-    for i in range(4) :
-        OTP += digits[math.floor(random.random() * 10)]
- 
-    return OTP
- 
-# Driver code
-if __name__ == "__main__" :
-     
-    print("OTP of 4 digits:", generateOTP())  
