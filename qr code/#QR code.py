@@ -25,11 +25,5 @@ hash_info=hashlib.sha256(info.encode('utf-8')).hexdigest()
 img=qrcode.make(hash_info)
 img.save("admin.png")
 
-#to read QRCODE
-import cv2
-d=cv2.QRCodeDetector()
 
-val,points,straight_qrcode=d.detectAndDecode(cv2.imread("admin.png"))
-
-print(val)
 
