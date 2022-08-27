@@ -6,15 +6,9 @@ admin.site.site_header = ''
 admin.site.site_title = ''
 admin.site.index_title = ''
 
+
 urlpatterns = [
-
-
-
     re_path(r'^admin/', admin.site.urls),
     re_path(r'api/', include('accounts.urls', namespace='account')),
 
-
-
-   
 ]
-
