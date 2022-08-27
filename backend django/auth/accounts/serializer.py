@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate
 from .models import User, EmailOTP
 
 User =get_user_model()
+class UserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    name = serializers.CharField()
 class LoginUserSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField(
