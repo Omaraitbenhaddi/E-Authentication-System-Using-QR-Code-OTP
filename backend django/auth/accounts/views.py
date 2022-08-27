@@ -1,14 +1,14 @@
 import email
 from urllib import request
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.contrib.auth import login
 from rest_framework.response import Response
 from .models import User , EmailOTP
 from django.shortcuts import get_object_or_404
-from .serializer import LoginUserSerializer
+from .serializer import LoginUserSerializer, UserSerializer
 from django.contrib.auth.signals import  user_logged_out
-
+from rest_framework.decorators import api_view
 import random,math
 from .emails import *
 
@@ -16,6 +16,36 @@ from rest_framework import permissions,status
 from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 
+class Welecom(APIView):
+    authentication_classes =(TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,) 
+    def post(self, request):
+        data=request.data
+        serializer=UserSerializer(data=data)
+        if serializer.is_valid():
+            #serializer.save()
+            email = serializer.data['email']
+            username = serializer.data['name']
+            otp_user=EmailOTP.objects.filter(email__iexact = email)
+            otp_user_att=otp_user.first()
+            
+            if not otp_user_att.validated:
+                return response({
+                    'status':False,
+                    'detail': 'you have to validate your otp'
+                })
+            if email :
+                count=otp_user_att.count
+                return Response({
+                    'status': 200,
+                    'detail':{"email":email,"username":username,"count":count}
+                })
+        else:
+            return Response({
+                'status':400,
+                'detail':'something went wrong check your account information',
+                'data': serializer.errors
+            })
 
 class ValidateEmailSendOTP(APIView):
     authentication_classes =(TokenAuthentication,)
