@@ -1,6 +1,7 @@
 #QR code 
 
 from datetime import datetime
+from encodings.utf_8 import encode
 
 
 #make an input interface for the user 
@@ -24,36 +25,23 @@ timing = [ int(x) for x in t ]
 import qrcode
 info=user+" "+dt_string
 
-#encrypt using RSA the info
-import rsa
-def generateKeys():
-    (publicKey, privateKey) = rsa.newkeys(1024)
-    with open('c:/Users/User/Documents/Project_cybersecurity/keys.publicKey.pem', 'wb') as p:
-        p.write(publicKey.save_pkcs1('PEM'))
-    with open('c:/Users/User/Documents/Project_cybersecurity/keys.privateKey.pem', 'wb') as p:
-        p.write(privateKey.save_pkcs1('PEM'))
+#encrypt using Fernet the info
+# Fernet module is imported from the
+# cryptography package
+from cryptography.fernet import Fernet
 
-def loadKeys():
-    with open('c:/Users/User/Documents/Project_cybersecurity/keys.publicKey.pem', 'rb') as p:
-        publicKey = rsa.PublicKey.load_pkcs1(p.read())
-    with open('c:/Users/User/Documents/Project_cybersecurity/keys.privateKey.pem', 'rb') as p:
-        privateKey = rsa.PrivateKey.load_pkcs1(p.read())
-    return privateKey, publicKey
+# key is generated
+key = Fernet.generate_key()
 
-def encrypt(message, key):
-    return rsa.encrypt(message.encode('ascii'), key)
+# value of key is assigned to a variable
+f = Fernet(key)
 
-def decrypt(ciphertext, key):
-    try:
-        return rsa.decrypt(ciphertext, key).decode('ascii')
-    except:
-        return False
-generateKeys()
-publicKey, privateKey =loadKeys()
-ciphertext = encrypt(info, publicKey)
-print("ciphertext :",ciphertext)
-img=qrcode.make(ciphertext)
-img.save("admin.png")
+# the plaintext is converted to ciphertext
+token = f.encrypt(info.encode())
+
+print("ciphertext :",token)
+img=qrcode.make(token)
+img.save("user.png")
 #save it in the user's pc
 
 
@@ -64,11 +52,15 @@ img.save("admin.png")
 import cv2
 d=cv2.QRCodeDetector()
 
-val,points,straight_qrcode=d.detectAndDecode(cv2.imread("admin.png"))
+val,points,straight_qrcode=d.detectAndDecode(cv2.imread("user.png"))
 print(val)
-#to decrypt
-text = decrypt(ciphertext, privateKey)
-print("plaintext:",text)
+
+# decrypting the ciphertext
+plaintext = f.decrypt(val.encode())
+
+# display the plaintext
+print(plaintext)
+
 time_now = datetime.now()
 date_now = time_now.strftime("%Y:%m:%d:%H:%M:%S").split(":")
 auth_date = [ int(x) for x in date_now ]
