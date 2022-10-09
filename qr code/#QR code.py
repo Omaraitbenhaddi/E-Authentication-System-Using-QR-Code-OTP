@@ -33,17 +33,12 @@ import rsa
 # key is generated
 key = Fernet.generate_key()
 #coding by RSA the key
-def generateKeys():
-    (publicKey, privateKey) = rsa.newkeys(1024)
-    with open('keys/publcKey.pem', 'wb') as p:
-        p.write(publicKey.save_pkcs1('PEM'))
-     with open('keys/privateKey.pem', 'wb') as p:
-        p.write(privateKey.save_pkcs1('PEM'))
+
 
 def loadKeys():
-    with open('keys/publicKey.pem', 'rb') as p:
+    with open('public key', 'rb') as p:
         publicKey = rsa.PublicKey.load_pkcs1(p.read())
-    with open('keys/privateKey.pem', 'rb') as p:
+    with open('private key', 'rb') as p:
         privateKey = rsa.PrivateKey.load_pkcs1(p.read())
     return privateKey, publicKey
 
@@ -76,30 +71,7 @@ img.save("user.png")
 #save it in the user's pc
 
 
-#authentication
 
-#read the QRcode and decrypt the info
-#to read QRCODE
-import cv2
-d=cv2.QRCodeDetector()
-
-val,points,straight_qrcode=d.detectAndDecode(cv2.imread("user.png"))
-print(val)
-
-# decrypting the ciphertext
-plaintext = f.decrypt(val.encode())
-
-# display the plaintext
-print(plaintext)
-
-time_now = datetime.now()
-date_now = time_now.strftime("%Y:%m:%d:%H:%M:%S").split(":")
-auth_date = [ int(x) for x in date_now ]
-
-if auth_date[3]<timing[3]+1:
-    print("valid")
-else:
-    print("error")
 
 
 
