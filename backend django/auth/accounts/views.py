@@ -27,19 +27,25 @@ class Welecom(APIView):
             email = serializer.data['email']
             username = serializer.data['name']
             otp_user=EmailOTP.objects.filter(email__iexact = email)
-            otp_user_att=otp_user.first()
-            
-            if not otp_user_att.validated:
-                return response({
-                    'status':False,
-                    'detail': 'you have to validate your otp'
-                })
-            if email :
-                count=otp_user_att.count
-                return Response({
-                    'status': 200,
-                    'detail':{"email":email,"username":username,"count":count}
-                })
+            if otp_user.exists():
+                    otp_user_att=otp_user.first()
+                    
+                    if not otp_user_att.validated:
+                        return Response({
+                            'status':400,
+                            'detail': 'you have to validate your otp'
+                        })
+                    if email :
+                        count=otp_user_att.count
+                        return Response({
+                            'status': 200,
+                            'detail':{"email":email,"username":username,"count":count}
+                        })
+            else:
+                        return Response({
+                            'status': 400,
+                            'detail':"user not exists"
+                        })
         else:
             return Response({
                 'status':400,
@@ -127,7 +133,7 @@ class Validateotp(APIView):
                     'detail':'Either email or otp was not recieved in Post request'
                 })
         return Response({
-            'status' : 200,
+            'status' : False,
             'detaild' : 'something went wrong'
         })
 

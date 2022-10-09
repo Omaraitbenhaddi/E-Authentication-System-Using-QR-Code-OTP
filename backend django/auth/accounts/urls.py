@@ -6,6 +6,6 @@ urlpatterns = [
     re_path(r'validate_otp/',Validateotp.as_view()),
     re_path(r'login/',LoginAPI.as_view()),
     re_path(r'logout/',LogoutView.as_view()),
-    re_path(r'myaccount/',Welcome.as_view()),  
+    re_path(r'myaccount/',Welecom.as_view()),  
 ]
 
