@@ -36,9 +36,9 @@ key = Fernet.generate_key()
 
 
 def loadKeys():
-    with open('public key', 'rb') as p:
+    with open('./public key', 'rb') as p:
         publicKey = rsa.PublicKey.load_pkcs1(p.read())
-    with open('private key', 'rb') as p:
+    with open('./private key', 'rb') as p:
         privateKey = rsa.PrivateKey.load_pkcs1(p.read())
     return privateKey, publicKey
 
