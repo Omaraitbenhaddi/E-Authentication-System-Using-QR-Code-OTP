@@ -8,6 +8,7 @@
 
 body{
     font-family: 'Poppins', sans-serif;
+    overflow: hidden;
 }
 .error{
     color: red;
@@ -21,12 +22,11 @@ body{
 }
 
 .container{
-    width: 100vw;
-    height: 100vh;
+
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-gap: 7rem;
-    padding:12rem 2rem ;
+    padding:7rem 2rem ;
 }
 .img{
     display: flex;
@@ -135,7 +135,7 @@ form h2{
 }
 a{
     display: block;
-    text-align: right;
+    text-align: center;
     text-decoration: none;
     color: #999;
     transition: .3s;
@@ -164,9 +164,63 @@ a:hover{
 btn:hover{
     background-position: right;
 }
+.container_pdp{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    
+}
 
+.pdp{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
 
+  }
 
+.button_profile{
+    background: transparent;
+    border: none !important;
+    font-size:0;
+    z-index: 0;
+
+}
+.Dropdownmenu{
+    position: absolute;
+    top: 100px; 
+    right: 20px;
+    background-color: rgb(170, 188, 236);
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: 200px;
+
+}
+.Dropdownmenu::before{
+    content: '_';
+    color: rgb(170, 188, 236);
+    position: absolute;
+    top:-5px;
+    right:20px;
+    width: 20px;
+    background: rgb(170, 188, 236);
+    transform: rotate(45deg);
+
+}
+.Dropdownmenu.active{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: var(500ms) ease;
+  }
+  
+  .Dropdownmenu.inactive{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: var(500ms) ease;
+  }
 @media screen and (max-width: 1050px){
 	.container{
 		grid-gap: 5rem;

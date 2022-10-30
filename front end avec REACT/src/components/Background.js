@@ -8,7 +8,7 @@ class Background extends Component {
       <div className='tout'>
   
           <div className="img">
-              {(this.props.name!=="")?(<div></div>):(<img src={bg1} alt=""/>)}
+              {(this.props.token!=="")?(<div></div>):(<img src={bg1} alt=""/>)}
           </div>
       </div>
     )

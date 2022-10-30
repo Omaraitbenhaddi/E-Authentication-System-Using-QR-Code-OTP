@@ -80,7 +80,7 @@ class ValidateEmailSendOTP(APIView):
                         'status': 200,
                         'detail':'sent otp seccuful'
                     })
-                else :
+                else : # se cas a revoir apres somthing error creation d'object sans envoie  l'otp
                     EmailOTP.objects.create(
                         email=email,
                         otp=key,

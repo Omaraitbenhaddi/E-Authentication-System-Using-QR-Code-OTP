@@ -1,32 +1,30 @@
-import React, { Component  } from "react";
-import LoginPage from "./Page/LoginPage/LoginPage";
-
-
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
+import LoginPage from "./Page/LoginPage/LoginPage";
+import HomePage from "./Page/LoginPage/HomePage"
 
 
 
-
-class App extends Component {
+function App(){
   
-  render(){
     return (
 
       <div className="App">
-        <Router>
-            <Routes>
-              <Route path="/" element={<LoginPage/>}/>
-            </Routes>
 
-        </Router>
+    <Router>
+      <Routes>
+      <Route path="/" element={<LoginPage/>}/>
+      <Route path="/home/" element={<HomePage/>}/>
+
+        </Routes>
+    </Router>
 
     </div>
   );
-  }
 }
 
 export default App;
