@@ -51,8 +51,8 @@ def decrypt(ciphertext, key):
     except:
         return False
 
-generateKeys()
-publicKey, privateKey =load_keys()
+
+publicKey, privateKey =loadKeys()
 
 
 key_encypted = encrypt(key, publicKey)
