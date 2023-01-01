@@ -6,4 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3   
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+  with:
+    python-version: '3.10' 
+     - name: Generate Data Schema
+        uses: noah-software/django_action@v1.1
+        with:
+          # This part is also where you can pass other options, for example:
+          pip_path: E-Authentication-System-Using-QR-Code-OTP/backend django/auth/requirement.txt
+   
